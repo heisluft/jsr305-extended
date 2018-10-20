@@ -1,0 +1,46 @@
+group 'de.heisluft.annotation'
+version '1.0.1'
+
+description 'An extended, Java 9 compatible jsr305 implementation'
+
+apply plugin: 'java'
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
+sourceCompatibility 1.8
+targetCompatibility 1.8
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    repositories {
+        maven {
+            url "http://heisluft.bplaced.net/upload/"
+        }
+    }
+    pom {
+
+    }
+    publications {
+        testing(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
+
+publish.dependsOn jar, sourcesJar, javadocJar
