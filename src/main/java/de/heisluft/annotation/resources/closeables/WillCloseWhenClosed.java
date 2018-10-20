@@ -1,8 +1,5 @@
 package de.heisluft.annotation.resources.closeables;
 
-
-import javax.annotation.WillClose;
-import javax.annotation.WillNotClose;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
