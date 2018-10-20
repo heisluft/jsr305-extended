@@ -19,6 +19,15 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 
+signing {
+    def data = file("signing").text.split("\n", 3)
+    if (data == null || data.length != 3) return
+    keyId = data[0]
+    password = data[1]
+    secretKeyRingFile= data[2]
+    sign publishing.publications.testing
+}
+
 artifacts {
     archives sourcesJar
     archives javadocJar
