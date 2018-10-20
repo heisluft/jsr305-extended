@@ -26,9 +26,18 @@ artifacts {
 }
 
 publishing {
+    def login = file("credentials").text.split(":", 2)
+    if (login == null || login.length != 2) return
     repositories {
         maven {
             url "http://heisluft.bplaced.net/upload/"
+            credentials {
+                username = login[0]
+                password = login[1]
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
         }
     }
     pom {
